@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 )
-
+// If the Request menthod is not Get, Post, Head, or Options we are returning an error. If it is an option we are changinf the access control request to access control allow.
 func cors(w http.ResponseWriter, r *http.Request) (_break bool) {
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Credentials", "true")
@@ -51,7 +51,8 @@ func handleHeaders(token string, request *http.Request, r *http.Request) {
 		request.Header.Set("referer", r.Header.Get("referer"))
 	}
 }
-
+// Here handleResponse function we are thorwing the internal server error when a request is sent to the client and if the response have some error.
+// And we are taking the key value pair from the header and if the key is Access-Control-Allow-Origin the we are continuing if not we are creating a loop through the values and adding the actaul value.
 func handleResponse(request *http.Request, w http.ResponseWriter) {
 	client := http.Client{}
 	response, err := client.Do(request)
